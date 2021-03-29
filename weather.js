@@ -1,56 +1,105 @@
+var windSpeedEl = document.querySelector("#wind-speed");
+var humidityEl = document.querySelector("#humidity");
+var uvIndexEl = document.querySelector("#uv-index");
+var cityEl = document.querySelector("#city-date");
 var weatherContainerEl = document.querySelector("#weather-container");
 var searchButton = document.getElementById("srchButton");
+var apiKey = "fac3e98026caf2998020a1a4238bc7fb";
 
-searchButton.addEventListener("click", getUserInput, false);
+// listener for search button to record user input
+searchButton.addEventListener("click", getUserInput);
 
+// function to store the value of the user input
 function getUserInput() {
-    var userInput = document.getElementById("input").value;
-    console.log(userInput);
+  var userInput = document.getElementById("input").value;
+  console.log(userInput);
 }
 
-var getWeather = function (api) {
+// find a way to plug user input into web api to return specified information
+
+// function to get forecast info from weather api
+var getWeatherForecast = function (api) {
   console.log(api);
-  var apiUrl = "http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=fac3e98026caf2998020a1a4238bc7fb";
+  var apiUrl =
+    "https://api.openweathermap.org/data/2.5/weather?q=Nashville&appid=" +
+    apiKey;
 
   fetch(apiUrl)
-  .then(response => response.json()) 
-  .then(data => {
-      console.log(data.list);
-    weatherContainerEl.toString();
-    weatherContainerEl.textContent = data.list[0].main.temp;
-    
-})};
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      // temperature
+      let temperatureDiv = document.createElement("div");
+      // create text node
+      let divElementText = document.createTextNode(
+        data.main.temp
+      );
+      // append text node to div
+        temperatureDiv.appendChild(divElementText);
+      weatherContainerEl.appendChild(temperatureDiv)
 
-var displayWeather = function (weather) {
-  for (var i = 0; i < weather.length; i++) {
-    // create a link element to take users to the issue on github
-    var weatherEl = document.createElement("a");
-    weatherEl.classList =
-      "list-item flex-row justify-space-between align-center";
-    weatherEl.setAttribute("href", weather[i].html_url);
-    weatherEl.setAttribute("target", "_blank");
+      // add data sets for weather forecast here...
 
-    // create span to hold issue title
-    var titleEl = document.createElement("span");
-    titleEl.textContent = weather[i].title;
+      // humidity
+      let humidityDiv = document.createElement("div");
+      let divhumidityText = document.createTextNode(
+        data.main.humidity  
+      );
+      humidityDiv.appendChild(divhumidityText);
+      humidityEl.appendChild(humidityDiv)
 
-    // append to container
-    weatherEl.appendChild(titleEl);
+      // wind-speed
+      let windSpeedDiv = document.createElement("div");
+      let divWindSpeedText = document.createTextNode(
+        data.wind.speed  
+      );
+      windSpeedDiv.appendChild(divWindSpeedText);
+      windSpeedEl.appendChild(windSpeedDiv)
 
-    // create a type element
-    var typeEl = document.createElement("span");
+      // uv index
+      let uvIndexDiv = document.createElement("div");
+      let divUvIndexText = document.createTextNode(
+        data.main.uv
+      );
+      uvIndexDiv.appendChild(divUvIndexText);
+      uvIndexEl.appendChild(uvIndexDiv)
 
-    // check if issue is an actual issue or a pull request
-    if (weather[i].pull_request) {
-      typeEl.textContent = "(Pull request)";
-    } else {
-      typeEl.textContent = "(Issue)";
-    }
+      // city/date
+      let cityDiv = document.createElement("div");
+      let divCityText = document.createTextNode(
+        data.name
+      );
+      cityDiv.appendChild(divCityText);
+      cityEl.appendChild(cityDiv)
 
-    // append to container
-    weatherEl.appendChild(typeEl);
-    weatherContainerEl.appendChild(weatherEl);
-  }
+
+    });
 };
 
-getWeather("weather");
+document.getElementById("srchButton").addEventListener("click", function () {
+  document.getElementById("card-deck").innerHTML = "weather goes here";
+});
+
+
+
+getWeatherForecast("weather");
+
+
+
+
+
+
+
+
+
+
+/*
+// create div element
+let divElement = document.createElement("div");
+// create text node
+let divElementText = document.createTextNode("Dynamically created div element");
+// append text node to div
+divElement.appendChild(divElementText);
+let weatherCard = document.getElementById("weather-container");
+weatherCard.appendChild(divElement);
+*/

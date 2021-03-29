@@ -13,7 +13,7 @@
 
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-          <span class="navbar-brand mx-auto mb-2 fs-1 h1">Weather Dashboard</span>
+          <span class="navbar-brand mx-auto mb-0 fs-1 h1">Weather Dashboard</span>
         </div>
       </nav>
 
@@ -29,8 +29,15 @@
             </div>
             
             <div class="col-12 col-md-8">
-                <div id="weather-container"></div>
-                <!-- 5 day forecast cards-->
+                <div id="weather-container">
+                    <div id="city-date"></div>
+                    <div id="temperature"></div>
+                    <div id="humidity"></div>
+                    <div id="wind-speed"></div>
+                    <div id="uv-index"></div>
+                </div>
+
+                
                 <h4>5-day Forecast:</h4>
                 <div class="card-deck" id="card-deck">
                     <div class="card bg-primary text-light" id="day1"></div>
