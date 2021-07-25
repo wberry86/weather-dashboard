@@ -4,15 +4,25 @@ var uvIndexEl = document.querySelector("#uv-index");
 var cityEl = document.querySelector("#city-date");
 var weatherContainerEl = document.querySelector("#weather-container");
 var searchButton = document.getElementById("srchButton");
+var cityInput = document.getElementById("search-container");
+var cityHistory = document.getElementById("search-history");
 var apiKey = "fac3e98026caf2998020a1a4238bc7fb";
 
 // listener for search button to record user input
-searchButton.addEventListener("click", getUserInput);
+searchButton.addEventListener("click", getUserInput, insertWeather);
 
 // function to store the value of the user input
 function getUserInput() {
   var userInput = document.getElementById("input").value;
   console.log(userInput);
+}
+
+function insertWeather(event) {
+  event.preventDefault();
+  var citySearch = document.createElement("li");
+  citySearch.textContent = cityInput.value;
+  cityHistory.appendChild(citySearch);
+    
 }
 
 // find a way to plug user input into web api to return specified information
